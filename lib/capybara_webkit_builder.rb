@@ -73,7 +73,11 @@ module CapybaraWebkitBuilder
     sh(make_bin) or return false
 
     FileUtils.mkdir("bin") unless File.directory?("bin")
-    FileUtils.cp(path_to_binary, "bin", :preserve => true)
+    begin
+      FileUtils.cp(path_to_binary, "bin", :preserve => true)
+    rescue => e
+      puts "Unable to write: #{path_to_binary}, {e}"
+    end
   end
 
   def clean
